@@ -117,7 +117,7 @@ while True:
             "Enfermedad":enfermedades_separadas[id_enfermedad]["name"],
             "coste":enfermedades_separadas[id_enfermedad]["price"],
         }
-        
+        contador2+=1
     if int(opcion) == 2:
         print("Indique el Id de la enfermedad:")
         for i in range(0,len(sistemas)):
