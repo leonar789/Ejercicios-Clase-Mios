@@ -193,6 +193,7 @@ products = {
 dispositivos=list(products.keys())
 marcas_list=[]
 lista_id=[]
+tipos=list(products.keys())
 marcas_pc=[]
 ventas={}
 for dispositivos, marcas in products.items():
@@ -206,6 +207,7 @@ contador2=1
 print(marcas_list)
 print(lista_id)
 while True:
+    contador=1
     opcion=input("Bienvenido a nuestra base de datos. Elija una de las siguientes opciones \n 1- Comprar \n 2- Eliminar Multa \n 3- Mostrar multas \n 4- Busqueda de multas por fiscales  \n 5- Salir   \n-->")
     if opcion.isnumeric():
         if  int(opcion) not in range(1,3):
@@ -215,71 +217,36 @@ while True:
         print("opcion no valida")
         continue
     if int(opcion)==1:
-        print("A continuación ingrese los datos solicitados: ")
-        nombrei=input("\t Nombre: ")
-        apellidoi=input("\t Apellido: ")
-        ci=input("\t Ci: ")
-        while True:
-            contador=1
-            print("¿Elija el id del dispositivo que desea?: \n")
-            for dispositivo, marcas in products.items():
-                print(f"\n-{dispositivo}")
-                for marca, equipos in marcas.items():
+        elecciondispositivo=input("1- mobiles \n 2- laptops: ")
+        if opcion.isnumeric():
+            if  int(opcion) not in range(1,3):
+                print("opcion no valida")
+                continue
+        else:
+            print("opcion no valida")
+            continue
+        for tipo, marcas in products.items():
+            if tipo==tipos[int(elecciondispositivo)-1]:
+                print("--"+ tipo)
+                for marca, modelos in marcas.items():
                     print(f"\t -{marca}")
-                    for equipo in equipos:
-                        for identidad, dato in equipo.items():
-                            if identidad == "name":
-                                print(f"\t \t {contador}- {dato}")
-                                contador+=1
-                print("\n")
-            while True:
-                id_compra=input("--> ")
-            
-                if not id_compra.isdigit():
-                    print("opcion no valida")
-                    continue
-                if int(id_compra) not in range(1, contador):
-                    print("opcion no valida")
-                    continue
-                break
-            for dispositivo, marcas in products.items():
-                for marca, equipos in marcas.items():
-                    for equipo in equipos:
-                        for identidad, dato in equipo.items():
-                            if dato==int(id_compra):
-                                 marca_compra=marca
-                                 dispositivo_compra=dispositivo
-
-            ventas[contador2]={
-                "nombre": nombrei,
-                "apellido": apellidoi,
-                "cedula": ci,
-                "Dispositivo": dispositivo_compra,
-                "Marca": marca_compra,
-                "Id producto": int(id_compra),
-                "producto":lista_id[int(id_compra)-1]["name"],
-                "coste":lista_id[int(id_compra)-1]["price"],
-                }
-            print("A continuación su factura \n")
-            for identidad, dato in ventas[contador2].items():
-                    print(f"\t {identidad}: \t {dato}")
-            contador2+=1
-            break
-
-    if int(opcion)==2:
+                    for modelo in modelos:
+                        for dato, info in modelo.items():
+                            if dato=="name":
+                                print(f"\t \t {modelo['id']}-{info} $ {modelo['price']}")
+                
     
-        contador=1
-        print("Dispositivos: \n")
-        for dispositivo, marcas in products.items():
-            print(f"\n-{dispositivo}")
-            for marca, equipos in marcas.items():
+    if int(opcion)==2:
+        print("A continuación ingrese los datos solicitados: ")
+        nombre=input("Nombre: ")
+        apellido=input("Apellido: ")
+        cedula=input("C.I: ")
+        for tipo, marcas in products.items():
+            print("--"+ tipo)
+            for marca, modelos in marcas.items():
                 print(f"\t -{marca}")
-                for equipo in equipos:
-                    for identidad, dato in equipo.items():
-                        if identidad == "name":
-                            print(f"\t \t {contador}- {dato}")
-                            contador+=11
-            print("\n")
-
-
-        
+                for modelo in modelos:
+                    for dato, info in modelo.items():
+                        if dato=="name":
+                            print(f"\t \t {contador}-{info} $ {modelo['price']}")
+                            contador+=1
